@@ -9,7 +9,9 @@ use Illuminate\Support\Str;
 
 /**
  * Importe des articles depuis un fichier Excel (.xlsx) ou CSV.
- * Colonnes : sous_menu ; nom ; prix ; stock ; cout ; description ; image
+ * Colonnes : sous_menu ; nom ; prix ; stock ; cout ; description ; image ; ancien_prix ; tailles
+ *  - ancien_prix (facultatif) : prix barré affiché en promotion
+ *  - tailles (facultatif) : ex « L, XL, XXL »
  *  - sous_menu : nom d'un sous-menu existant (ex : « Sacs », « Cartes de visite »)
  *  - prix vide = « Prix sur devis » ; stock vide = illimité (services)
  *  - image : nom d'un fichier placé dans le dossier « images » à côté du CSV (facultatif)
@@ -61,6 +63,8 @@ class CatalogImporter
 
             $data = [
                 'price' => $this->num($row['prix'] ?? ''),
+                'old_price' => $this->num($row['ancien_prix'] ?? ''),
+                'sizes' => trim($row['tailles'] ?? '') ?: null,
                 'stock' => ($s = $this->num($row['stock'] ?? '')) === null ? null : (int) $s,
                 'cost_price' => $this->num($row['cout'] ?? '') ?? 0,
                 'description' => trim($row['description'] ?? '') ?: null,

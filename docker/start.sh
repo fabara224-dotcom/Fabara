@@ -22,6 +22,14 @@ php artisan migrate --force
 if [ "$(php artisan tinker --execute='echo \App\Models\User::count();' 2>/dev/null | tail -n1)" = "0" ]; then
   php artisan db:seed --force
 fi
+# Catalogue Fabara (photos, prix, promotions, tailles) : appliqué une seule fois par version.
+# Une copie de la base est gardée dans /data avant le remplacement.
+# Pour le réappliquer après avoir modifié database/seeders/fabara/articles.csv, augmentez ce numéro.
+CATALOGUE_VERSION=2
+if [ ! -f "/data/.catalogue-fabara-v${CATALOGUE_VERSION}" ]; then
+  cp /data/database.sqlite "/data/sauvegarde-avant-catalogue-v${CATALOGUE_VERSION}.sqlite" || true
+  php artisan fabara:catalogue --force && touch "/data/.catalogue-fabara-v${CATALOGUE_VERSION}"
+fi
 php artisan config:cache || true
 php artisan route:cache || true
 php artisan view:cache || true

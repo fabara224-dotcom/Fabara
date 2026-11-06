@@ -37,22 +37,24 @@ class FabaraTest extends TestCase
     // ---------- site public ----------
     public function test_home_page_shows_both_menus_without_fake_products(): void
     {
-        $this->get('/')->assertOk()->assertSee('Cartes de visite')->assertSee('Tunique MakiSall')->assertSee('Bientôt disponible');
+        $this->get('/')->assertOk()->assertSee('Cartes de visite')->assertSee('Robes de soirée')->assertSee('Promotions');
         $this->assertDatabaseCount('products', 0);   // aucun article d'exemple
     }
 
     public function test_category_and_product_pages(): void
     {
-        $c = Category::where('slug', 'sacs')->first();
-        $visible = $this->product(['category_id' => $c->id, 'name' => 'Visible']);
+        $c = Category::where('slug', 'mode-femme')->first();
+        $visible = $this->product(['category_id' => $c->id, 'name' => 'Visible', 'price' => 350000, 'old_price' => 500000, 'sizes' => 'L, XL']);
         $this->product(['category_id' => $c->id, 'name' => 'Invisible', 'is_active' => false]);
-        $this->get('/boutique/sacs')->assertOk()->assertSee('Visible')->assertDontSee('Invisible');
-        $this->get('/boutique/sacs?q=Vis')->assertOk()->assertSee('Visible');
-        $this->get('/imprimerie/sacs')->assertNotFound();
+        $this->get('/boutique/mode-femme')->assertOk()->assertSee('Visible')->assertDontSee('Invisible')->assertSee('-30%');
+        $this->get('/boutique/mode-femme?q=Vis')->assertOk()->assertSee('Visible');
+        $this->get('/imprimerie/mode-femme')->assertNotFound();
+        $this->get('/promotions')->assertOk()->assertSee('Visible');
         $this->get('/article/' . $visible->id)->assertOk()->assertSee('Visible');
         $hidden = Product::where('name', 'Invisible')->first();
         $this->get('/article/' . $hidden->id)->assertNotFound();
-        $this->get('/')->assertOk()->assertSee('Derniers articles');
+        $this->get('/article/' . $visible->id)->assertSee('Choisir la taille');
+        $this->get('/')->assertOk()->assertSee('Nouvelle collection Femme');
     }
 
     // ---------- connexion et droits ----------
@@ -243,18 +245,15 @@ class FabaraTest extends TestCase
     public function test_demo_data_fills_everything_and_can_be_cleared(): void
     {
         $this->artisan('fabara:demo')->assertSuccessful();
-        foreach (Category::all() as $c) {
-            $this->assertEquals(5, $c->products()->count(), 'Il faut 5 articles dans « ' . $c->name . ' »');
-        }
+        $this->assertGreaterThan(0, Product::where('is_demo', true)->count());
         $this->assertGreaterThan(10, Sale::count());
-        $this->assertGreaterThan(8, PrintOrder::count());
+        $this->assertGreaterThan(0, PrintOrder::count()); // seuls les sous-menus encore présents reçoivent des exemples
         $this->assertGreaterThan(4, QuoteRequest::count());
         $this->assertEquals(0, Product::whereNotNull('stock')->where('stock', '<', 0)->count());
 
         // Le suivi fonctionne avec les codes de démonstration
         $this->post('/suivi', ['code' => 'DEMO01', 'phone' => '620 11 22 01'])->assertOk()->assertSee('Cartes de visite x500');
-        $this->get('/')->assertOk()->assertSee('Derniers articles');
-        $this->get('/boutique/chaussures')->assertOk()->assertSee('Baskets homme');
+        $this->get('/')->assertOk()->assertSee('Commandez vos impressions');
         $this->actingAs($this->user('admin'));
         foreach (['', '/sales', '/products', '/print-orders', '/quote-requests', '/purchases', '/expenses', '/customers', '/stock-movements', '/accounting'] as $p) {
             $this->get('/admin' . $p)->assertOk();
@@ -447,7 +446,7 @@ class FabaraTest extends TestCase
         $dir = sys_get_temp_dir() . '/imp' . uniqid();
         mkdir($dir . '/images', 0775, true);
         file_put_contents($dir . '/images/a.png', base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='));
-        file_put_contents($dir . '/a.csv', "sous_menu;nom;prix;stock;cout;description;image\nSacs;Sac rouge;150 000;5;100000;Joli;a.png\nInconnu;X;1;;;;\n");
+        file_put_contents($dir . '/a.csv', "sous_menu;nom;prix;stock;cout;description;image\nMode Femme;Sac rouge;150 000;5;100000;Joli;a.png\nInconnu;X;1;;;;\n");
         $imp = (new \App\Support\CatalogImporter())->run($dir . '/a.csv', $dir . '/images');
         $this->assertSame(1, $imp->created);
         $this->assertCount(1, $imp->errors);

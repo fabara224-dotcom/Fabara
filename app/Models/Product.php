@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $guarded = [];
     protected $appends = ['image_url'];
-    protected $casts = ['price' => 'float', 'cost_price' => 'float', 'is_active' => 'boolean'];
+    protected $casts = ['price' => 'float', 'old_price' => 'float', 'cost_price' => 'float', 'is_active' => 'boolean'];
 
     protected static function booted(): void
     {
@@ -30,6 +30,23 @@ class Product extends Model
     public function getImageUrlAttribute(): ?string
     {
         return $this->image ? Storage::disk('public')->url($this->image) : null;
+    }
+
+    /** La promotion n'est affichée que si l'ancien prix est plus élevé que le prix actuel. */
+    public function onSale(): bool
+    {
+        return $this->price && $this->old_price && $this->old_price > $this->price;
+    }
+
+    public function discount(): int
+    {
+        return $this->onSale() ? (int) round((1 - $this->price / $this->old_price) * 100) : 0;
+    }
+
+    /** @return string[] */
+    public function sizeList(): array
+    {
+        return array_values(array_filter(array_map('trim', explode(',', (string) $this->sizes))));
     }
 
     public function isLow(): bool

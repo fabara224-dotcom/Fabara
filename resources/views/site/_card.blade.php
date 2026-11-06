@@ -1,30 +1,40 @@
-@php($menu = $p->category?->menu ?? 'boutique')
+{{-- Carte article : $p (Product), $scope (facultatif, si le même article apparaît deux fois sur la page) --}}
+@php($scope = $scope ?? '')
 @php($out = $p->stock !== null && $p->stock <= 0)
-@php($low = ! $out && $p->stock !== null && $p->isLow())
-@php($isNew = $p->created_at && $p->created_at->gt(now()->subDays(14)))
-<a href="{{ route('product', $p) }}" class="lift reveal group flex flex-col bg-white border border-neutral-200 rounded-2xl overflow-hidden">
-  <div class="zoom relative overflow-hidden">
+@php($contain = $p->category?->menu === 'imprimerie' || $p->category?->slug === 'beaute-soins')
+@php($sizes = $p->sizeList())
+@php($data = ['id' => $p->id, 'n' => $p->name, 'p' => $p->price ? (float) $p->price : null, 'img' => $p->image_url, 'sizes' => $sizes])
+<article class="fb-card">
+  <a class="fb-thumb" href="{{ route('product', $p) }}">
     @if ($p->image_url)
-      <img src="{{ $p->image_url }}" alt="{{ $p->name }}" loading="lazy" class="w-full aspect-[4/3] object-cover {{ $out ? 'opacity-60 grayscale' : '' }}">
+      <img @class(['contain' => $contain]) src="{{ $p->image_url }}" alt="{{ $p->name }}" loading="lazy" style="{{ $out ? 'opacity:.5;filter:grayscale(1)' : '' }}">
     @else
-      <div class="w-full aspect-[4/3] grid place-items-center {{ $menu === 'boutique' ? 'bg-gradient-to-br from-pink-50 to-pink-100' : 'bg-gradient-to-br from-red-50 to-orange-100' }}">
-        <span class="text-5xl">{{ $p->category?->icon() }}</span>
-      </div>
+      <span class="ph">{{ $p->category?->icon() }}</span>
     @endif
-    <div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
-      @if ($out)<span class="bg-neutral-900 text-white text-[11px] font-semibold px-2 py-1 rounded-full">Épuisé</span>
-      @elseif ($low)<span class="bg-fyellow text-neutral-900 text-[11px] font-semibold px-2 py-1 rounded-full">Dernières pièces</span>
-      @elseif ($isNew)<span class="bg-fgreen text-white text-[11px] font-semibold px-2 py-1 rounded-full">Nouveau</span>@endif
+    @if ($p->onSale())<span class="fb-off">-{{ $p->discount() }}%</span>@endif
+    @if ($out)<span class="fb-tag dark">Épuisé</span>
+    @elseif ($p->created_at && $p->created_at->gt(now()->subDays(30)))<span class="fb-tag">Nouveau</span>@endif
+  </a>
+  <div class="fb-info">
+    <a href="{{ route('product', $p) }}"><h3>{{ $p->name }}</h3></a>
+    @if ($sizes && ! $out)
+      <select class="fb-size" id="size-{{ $p->id }}{{ $scope }}" aria-label="Taille">
+        <option value="">Choisir la taille</option>
+        @foreach ($sizes as $s)<option>{{ $s }}</option>@endforeach
+      </select>
+    @endif
+    <div class="fb-buy">
+      <div class="fb-price fb-num">
+        @if ($p->price)
+          <b @class(['sale' => $p->onSale()])>{{ \App\Support\Money::fmt($p->price) }}</b>
+          @if ($p->onSale())<s>{{ \App\Support\Money::fmt($p->old_price) }}</s>@endif
+        @else
+          <em>Prix sur devis</em>
+        @endif
+      </div>
+      @unless ($out)
+        <button type="button" class="fb-add" data-add="{{ json_encode($data) }}" data-scope="{{ $scope }}" aria-label="Ajouter {{ $p->name }} au panier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><path d="M13 9v4M11 11h4"/></svg></button>
+      @endunless
     </div>
   </div>
-  <div class="p-4 flex flex-col gap-1 flex-1">
-    <span class="text-xs text-neutral-500">{{ $p->category?->name }}</span>
-    <b class="leading-snug line-clamp-2">{{ $p->name }}</b>
-    <div class="mt-auto pt-2 flex items-end justify-between">
-      <span class="font-extrabold text-lg {{ $menu === 'boutique' ? 'text-fpink' : 'text-fred' }}">
-        {{ $p->price ? ($menu === 'imprimerie' ? 'dès ' : '') . \App\Support\Money::fmt($p->price) : 'Sur devis' }}
-      </span>
-      <span class="text-sm text-neutral-400 group-hover:text-neutral-900 transition">Voir →</span>
-    </div>
-  </div>
-</a>
+</article>

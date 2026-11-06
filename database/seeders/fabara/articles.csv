@@ -1,0 +1,67 @@
+sous_menu;nom;prix;stock;cout;description;image;ancien_prix;tailles
+Robes de soirée;Robe de soirée résille sequins – Vert émeraude;450000;;;Robe longue en résille brodée de sequins, idéale pour mariages et cérémonies.;soiree-vert.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe de soirée résille sequins – Mauve;450000;;;Robe longue en résille brodée de sequins, idéale pour mariages et cérémonies.;soiree-mauve.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe de soirée résille sequins – Corail;450000;;;Robe longue en résille brodée de sequins, idéale pour mariages et cérémonies.;soiree-corail.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe volant épaule & roses – Bleu jean;450000;;;Robe longue à volant sur l'épaule et roses en relief.;volant-bleu.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe volant épaule & roses – Vieux rose;450000;;;Robe longue à volant sur l'épaule et roses en relief.;volant-rose.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe volant épaule & roses – Beige;450000;;;Robe longue à volant sur l'épaule et roses en relief.;volant-beige.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe volant épaule & roses – Bordeaux;450000;;;Robe longue à volant sur l'épaule et roses en relief.;volant-bordeaux.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe portefeuille à pois strass – Rose poudré;450000;;;Robe longue portefeuille à pois et strass, ceinture brillante.;portefeuille-rose.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe portefeuille à pois strass – Mauve;450000;;;Robe longue portefeuille à pois et strass, ceinture brillante.;portefeuille-mauve.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe asymétrique à cape – Bleu marine;450000;;;Robe longue à une épaule avec cape fluide.;cape-marine.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe asymétrique à cape – Beige doré;450000;;;Robe longue à une épaule avec cape fluide.;cape-beige.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe dentelle perlée & mousseline – Violet;450000;;;Haut en dentelle perlée, jupe longue en mousseline.;dentelle-violet.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe longue bustier perlé – Rouge;450000;;;Robe longue au bustier perlé et manches transparentes.;perle-rouge.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe sequins manches papillon – Rouge bordeaux;450000;;;Robe longue à sequins avec manches papillon.;papillon-rouge.webp;500000;L, XL, XXL, 3XL, 4XL
+Mode Femme;Robe chemise plissée – Bordeaux;450000;;;Robe longue chemise plissée, élégante au quotidien.;chemise-bordeaux.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe longue plissée scintillante – Vert émeraude;450000;;;Robe longue plissée en tissu scintillant, manches évasées et ceinture fleurie.;plissee-long-vert.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe longue plissée scintillante – Vieux rose;450000;;;Robe longue plissée en tissu scintillant, manches évasées et ceinture fleurie.;plissee-long-rose.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes blanches;Robe longue broderie anglaise blanche – Col V boutonné;450000;;;Robe longue blanche en broderie anglaise, parfaite pour les cérémonies.;blanche-broderie.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes blanches;Robe longue broderie anglaise blanche – Encolure froncée;450000;;;Robe longue blanche en broderie anglaise, parfaite pour les cérémonies.;blanche-epaules.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes blanches;Robe longue broderie anglaise blanche – Ajourée manches 3/4;450000;;;Robe longue blanche en broderie anglaise, parfaite pour les cérémonies.;blanche-ajouree.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes blanches;Robe longue broderie anglaise blanche – Imprimé palmes;450000;;;Robe longue blanche en broderie anglaise, parfaite pour les cérémonies.;blanche-palmes.webp;500000;L, XL, XXL, 3XL, 4XL
+Robes de soirée;Robe longue plissée cape fleurie – Beige pêche;450000;;;Robe longue plissée avec cape et fleurs brodées, ceinture assortie.;plissee-peche.webp;500000;L, XL, XXL, 3XL, 4XL
+Mode Femme;Robe plissée ceinturée – Noir;350000;;;Robe plissée avec ceinture.;plissee-noir.webp;;L, XL, XXL, 3XL, 4XL
+Mode Femme;Robe plissée ceinturée – Fuchsia ou rose;350000;;;Robe plissée avec ceinture.;plissee-roses.webp;;L, XL, XXL, 3XL, 4XL
+Mode Femme;Robe chemise ceinturée – Beige;350000;;;Robe chemise mi-longue avec poches et ceinture tressée.;chemise-beige.webp;;L, XL, XXL, 3XL, 4XL
+Ensembles femme;Ensemble veste & pantalon – Bordeaux, noir ou blanc;500000;;;Ensemble veste cintrée et pantalon large. Coloris : bordeaux, noir ou blanc.;ensemble-veste.webp;;L, XL, XXL, 3XL, 4XL
+Ensembles femme;Ensemble chemise + short;;;;Ensemble léger chemise et short. Coloris : rouge, blanc ou marron.;ensemble-short.webp;;
+Ensembles femme;Ensemble chemise + pantalon;;;;Ensemble chemise et pantalon. Coloris : marron, rouge ou blanc.;ensemble-pantalon.webp;;
+Tenues Guinée;Tenue Guinée 2 octobre – Robe t-shirt blanche;;;;Robe t-shirt « Guinée 2 octobre – 68 ans de liberté ».;guinee-robe-blanche.webp;;
+Tenues Guinée;Tenue Guinée 2 octobre – Robe t-shirt noire;;;;Robe t-shirt « Guinée 2 octobre – 68 ans de liberté ».;guinee-robe-noire.webp;;
+Tenues Guinée;Tenue Guinée 2 octobre – Duo homme & femme;;;;T-shirts assortis « Guinée 2 octobre – 68 ans de liberté » pour homme et femme.;guinee-couple.webp;;
+Mode Homme;Ensemble jogging homme & femme – Noir;250000;;;Ensemble sweat et pantalon de jogging.;jogging-noir.webp;;
+Mode Homme;Ensemble jogging homme & femme – Blanc;250000;;;Ensemble sweat et pantalon de jogging.;jogging-blanc.webp;;
+Mode Homme;Ensemble homme brodé plastron – Blanc broderie noire;250000;;;Ensemble tunique et pantalon avec plastron brodé.;h-brode-blanc-noir.webp;;
+Mode Homme;Ensemble homme brodé plastron – Blanc broderie dorée;250000;;;Ensemble tunique et pantalon avec plastron brodé.;h-brode-blanc-or.webp;;
+Mode Homme;Ensemble homme brodé plastron – Blanc motifs bogolan;250000;;;Ensemble tunique et pantalon avec plastron brodé.;h-brode-blanc-jardin.webp;;
+Mode Homme;Ensemble homme brodé plastron – Noir plastron blanc;250000;;;Ensemble tunique et pantalon avec plastron brodé.;h-brode-noir.webp;;
+Mode Homme;Ensemble homme rayé – Noir fines rayures;250000;;;Ensemble tunique et pantalon rayés.;h-raye-noir.webp;;
+Mode Homme;Ensemble homme rayé – Vert fines rayures;250000;;;Ensemble tunique et pantalon rayés.;h-raye-vert.webp;;
+Mode Homme;Ensemble homme rayé – Vert & noir;250000;;;Ensemble tunique et pantalon rayés.;h-raye-vert-noir.webp;;
+Mode Homme;Ensemble homme rayé – Bordeaux & bleu;250000;;;Ensemble tunique et pantalon rayés.;h-raye-bordeaux.webp;;
+Mode Homme;Ensemble homme blanc élégant – Plissé bouton doré;250000;;;Ensemble blanc tunique et pantalon.;h-blanc-plisse.webp;;
+Mode Homme;Ensemble homme blanc élégant – Lignes grises;250000;;;Ensemble blanc tunique et pantalon.;h-blanc-lignes.webp;;
+Mode Homme;Ensemble homme classique – Gris uni;250000;;;Ensemble tunique et pantalon coupe classique.;h-uni-gris.webp;;
+Mode Homme;Ensemble homme classique – Noir broderie dorée;250000;;;Ensemble tunique et pantalon coupe classique.;h-noir-dore.webp;;
+Mode Homme;Ensemble homme classique – Gris & carreaux;250000;;;Ensemble tunique et pantalon coupe classique.;h-gris-carreaux.webp;;
+Mode Homme;Tunique homme de cérémonie – Beige col noir;250000;;;Tunique longue de cérémonie.;h-tunique-beige.webp;;
+Mode Homme;Tunique homme de cérémonie – Noir broderie cuivre;250000;;;Tunique longue de cérémonie.;h-tunique-noire.webp;;
+Mode Homme;Tunique homme de cérémonie – Crème galon brodé;250000;;;Tunique longue de cérémonie.;h-tunique-creme.webp;;
+Beauté & soins;Savon Alata Garden Diamond, citron;50000;;;Savon naturel au citron, en seau.;b-alata.webp;;
+Beauté & soins;Savon Asantee papaye & miel;50000;;;Savon à la papaye et au miel, Q10, AHA + BHA.;b-asantee-papaye.webp;;
+Beauté & soins;Savon Asantee lait de riz & collagène;50000;;;Savon au lait de riz et collagène, 135 g.;b-asantee-riz.webp;;
+Beauté & soins;Savon au lait de riz Jam;30000;;;Savon thaïlandais au lait de riz.;b-jam.webp;;
+Beauté & soins;Savon Kojie San Classic;50000;;;Savon Kojie San Classic.;b-kojie.webp;;
+Beauté & soins;Savon La Belle collagène;50000;;;Savon de beauté au collagène, 160 g.;b-labelle.webp;;
+Beauté & soins;Savon gommant Luffa Fluffy;50000;;;Savon gommant au luffa, 150 g.;b-luffa-savon.webp;;
+Beauté & soins;Gel douche exfoliant Luffa;;;;Gel douche exfoliant au luffa, 950 ml.;b-luffa-gel.webp;;
+Beauté & soins;Lait corporel Miss Mari papaye;150000;;;Lait corporel à la papaye, vitamines C et E.;b-missmari.webp;;
+Beauté & soins;Crème anti-vergetures Milky;150000;;;Crème corporelle Milky.;b-milky.webp;;
+Cachets;Cachet rond personnalisé;130000;;;Cachet rond avec votre texte et votre logo.;impress-cachets.webp;;
+Cartes de visite;Cartes de visite (lot de 100);150000;;;100 cartes de visite recto-verso avec votre design.;impress-cartes.webp;;
+Casquettes brodées;Casquette brodée à votre nom;100000;;;Casquette blanche brodée à votre nom, aux couleurs de la Guinée.;casq-noms-2.webp;;
+Casquettes brodées;Casquette brodée avec votre logo;100000;;;Casquette brodée avec le logo de votre entreprise ou association.;casq-fabara-orange.webp;;
+Éventails personnalisés;Éventail photo pour mariage;15000;;;Éventail avec votre photo et vos prénoms, pour mariages et baptêmes.;impress-eventails.webp;;
+Calendriers;Calendrier mural A3 personnalisé;30000;;;Calendrier mural A3 avec vos photos : anniversaire, famille ou entreprise.;impress-calendrier-photo.webp;;
+Sacs Personnalisés;Sacs kraft personnalisés;;;;Sacs en papier kraft imprimés avec votre logo. Prix selon quantité.;impress-sacs-kraft.webp;;

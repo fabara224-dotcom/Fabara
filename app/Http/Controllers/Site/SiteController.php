@@ -5,18 +5,41 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class SiteController extends Controller
 {
     public function home()
     {
-        $menus = Category::withCount(['products' => fn ($q) => $q->where('is_active', true)])->orderBy('position')->get()->groupBy('menu');
-        $latest = Product::with('category')->where('is_active', true)->latest()->take(8)->get();
-        $totals = [
-            'boutique' => Product::where('is_active', true)->whereHas('category', fn ($query) => $query->where('menu', 'boutique'))->count(),
-            'imprimerie' => Product::where('is_active', true)->whereHas('category', fn ($query) => $query->where('menu', 'imprimerie'))->count(),
+        $categories = Category::withCount(['products' => fn ($q) => $q->where('is_active', true)])
+            ->orderByRaw("CASE menu WHEN 'boutique' THEN 0 ELSE 1 END")->orderBy('position')->get();
+        $active = Product::with('category')->where('is_active', true)->orderBy('id')->get();
+        $in = fn (array $slugs) => $active->filter(fn ($p) => in_array($p->category?->slug, $slugs, true));
+
+        $sections = [
+            'femme' => $this->oneByModel($in(['robes-de-soiree', 'robes-blanches', 'mode-femme', 'ensembles-femme', 'tenues-guinee']))->take(6),
+            'homme' => $this->oneByModel($in(['mode-homme']))->take(6),
+            'beaute' => $this->oneByModel($in(['beaute-soins']))->take(6),
+            'promos' => $this->oneByModel($active->filter(fn ($p) => $p->onSale()))->take(8),
+            'impress' => $this->oneByModel($active->filter(fn ($p) => $p->category?->menu === 'imprimerie'))->take(6),
         ];
-        return view('site.home', compact('menus', 'latest', 'totals'));
+        $promoThumb = $sections['promos']->first()?->image_url;
+
+        return view('site.home', compact('categories', 'sections', 'promoThumb'));
+    }
+
+    public function promotions()
+    {
+        $products = Product::with('category')->where('is_active', true)
+            ->whereNotNull('old_price')->whereColumn('old_price', '>', 'price')->orderBy('id')->get();
+        return view('site.promotions', compact('products'));
+    }
+
+    /** Un seul article par modèle (les couleurs d'un même modèle s'appellent « Modèle – Couleur »). */
+    private function oneByModel(Collection $products): Collection
+    {
+        return $products->unique(fn ($p) => Str::before($p->name, ' – '))->values();
     }
 
     public function search(Request $r)
@@ -52,8 +75,12 @@ class SiteController extends Controller
     {
         abort_unless($product->is_active, 404);
         $product->load('category');
-        $related = Product::with('category')->where('is_active', true)->where('category_id', $product->category_id)
-            ->where('id', '!=', $product->id)->latest()->take(4)->get();
-        return view('site.product', compact('product', 'related'));
+        $model = Str::before($product->name, ' – ');
+        $variants = $model !== $product->name
+            ? Product::where('is_active', true)->where('category_id', $product->category_id)->where('name', 'like', $model . ' – %')->orderBy('id')->get()
+            : collect();
+        $related = $this->oneByModel(Product::with('category')->where('is_active', true)->where('category_id', $product->category_id)
+            ->where('name', 'not like', $model . '%')->orderBy('id')->get())->take(6);
+        return view('site.product', compact('product', 'related', 'variants', 'model'));
     }
 }

@@ -50,6 +50,10 @@ class ProductResource extends BaseResource
                 Forms\Components\TextInput::make('price')->label('Prix de vente')->numeric()->minValue(0)
                     ->required(fn (Get $get) => static::requiresPrice($get('category_id')))
                     ->helperText('Obligatoire en boutique. En imprimerie, vide = « Prix sur devis ».'),
+                Forms\Components\TextInput::make('old_price')->label('Ancien prix (promotion)')->numeric()->minValue(0)
+                    ->helperText('Facultatif. S’il est plus élevé que le prix de vente, il s’affiche barré avec le badge « -x % ».'),
+                Forms\Components\TextInput::make('sizes')->label('Tailles disponibles')->placeholder('L, XL, XXL, 3XL, 4XL')
+                    ->helperText('Facultatif. Séparez par des virgules : le client choisit sa taille avant de commander.'),
                 Forms\Components\TextInput::make('cost_price')->label('Prix d’achat (ce que l’article vous coûte)')->numeric()->default(0)
                     ->helperText('Sert à calculer votre bénéfice.'),
                 Forms\Components\TextInput::make('stock')->label('Quantité en stock (vide = illimité)')->numeric()->integer()

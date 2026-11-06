@@ -1,32 +1,41 @@
-<?php ($menu = $p->category?->menu ?? 'boutique'); ?>
-<?php ($out = $p->stock !== null && $p->stock <= 0); ?>
-<?php ($low = ! $out && $p->stock !== null && $p->isLow()); ?>
-<?php ($isNew = $p->created_at && $p->created_at->gt(now()->subDays(14))); ?>
-<a href="<?php echo e(route('product', $p)); ?>" class="lift reveal group flex flex-col bg-white border border-neutral-200 rounded-2xl overflow-hidden">
-  <div class="zoom relative overflow-hidden">
-    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($p->image_url): ?>
-      <img src="<?php echo e($p->image_url); ?>" alt="<?php echo e($p->name); ?>" loading="lazy" class="w-full aspect-[4/3] object-cover <?php echo e($out ? 'opacity-60 grayscale' : ''); ?>">
-    <?php else: ?>
-      <div class="w-full aspect-[4/3] grid place-items-center <?php echo e($menu === 'boutique' ? 'bg-gradient-to-br from-pink-50 to-pink-100' : 'bg-gradient-to-br from-red-50 to-orange-100'); ?>">
-        <span class="text-5xl"><?php echo e($p->category?->icon()); ?></span>
-      </div>
-    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-    <div class="absolute top-2 left-2 flex flex-col gap-1 items-start">
-      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($out): ?><span class="bg-neutral-900 text-white text-[11px] font-semibold px-2 py-1 rounded-full">Épuisé</span>
-      <?php elseif($low): ?><span class="bg-fyellow text-neutral-900 text-[11px] font-semibold px-2 py-1 rounded-full">Dernières pièces</span>
-      <?php elseif($isNew): ?><span class="bg-fgreen text-white text-[11px] font-semibold px-2 py-1 rounded-full">Nouveau</span><?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-    </div>
-  </div>
-  <div class="p-4 flex flex-col gap-1 flex-1">
-    <span class="text-xs text-neutral-500"><?php echo e($p->category?->name); ?></span>
-    <b class="leading-snug line-clamp-2"><?php echo e($p->name); ?></b>
-    <div class="mt-auto pt-2 flex items-end justify-between">
-      <span class="font-extrabold text-lg <?php echo e($menu === 'boutique' ? 'text-fpink' : 'text-fred'); ?>">
-        <?php echo e($p->price ? ($menu === 'imprimerie' ? 'dès ' : '') . \App\Support\Money::fmt($p->price) : 'Sur devis'); ?>
 
-      </span>
-      <span class="text-sm text-neutral-400 group-hover:text-neutral-900 transition">Voir →</span>
+<?php ($scope = $scope ?? ''); ?>
+<?php ($out = $p->stock !== null && $p->stock <= 0); ?>
+<?php ($contain = $p->category?->menu === 'imprimerie' || $p->category?->slug === 'beaute-soins'); ?>
+<?php ($sizes = $p->sizeList()); ?>
+<?php ($data = ['id' => $p->id, 'n' => $p->name, 'p' => $p->price ? (float) $p->price : null, 'img' => $p->image_url, 'sizes' => $sizes]); ?>
+<article class="fb-card">
+  <a class="fb-thumb" href="<?php echo e(route('product', $p)); ?>">
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($p->image_url): ?>
+      <img class="<?php echo \Illuminate\Support\Arr::toCssClasses(['contain' => $contain]); ?>" src="<?php echo e($p->image_url); ?>" alt="<?php echo e($p->name); ?>" loading="lazy" style="<?php echo e($out ? 'opacity:.5;filter:grayscale(1)' : ''); ?>">
+    <?php else: ?>
+      <span class="ph"><?php echo e($p->category?->icon()); ?></span>
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($p->onSale()): ?><span class="fb-off">-<?php echo e($p->discount()); ?>%</span><?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($out): ?><span class="fb-tag dark">Épuisé</span>
+    <?php elseif($p->created_at && $p->created_at->gt(now()->subDays(30))): ?><span class="fb-tag">Nouveau</span><?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+  </a>
+  <div class="fb-info">
+    <a href="<?php echo e(route('product', $p)); ?>"><h3><?php echo e($p->name); ?></h3></a>
+    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($sizes && ! $out): ?>
+      <select class="fb-size" id="size-<?php echo e($p->id); ?><?php echo e($scope); ?>" aria-label="Taille">
+        <option value="">Choisir la taille</option>
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $sizes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><option><?php echo e($s); ?></option><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+      </select>
+    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+    <div class="fb-buy">
+      <div class="fb-price fb-num">
+        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($p->price): ?>
+          <b class="<?php echo \Illuminate\Support\Arr::toCssClasses(['sale' => $p->onSale()]); ?>"><?php echo e(\App\Support\Money::fmt($p->price)); ?></b>
+          <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($p->onSale()): ?><s><?php echo e(\App\Support\Money::fmt($p->old_price)); ?></s><?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        <?php else: ?>
+          <em>Prix sur devis</em>
+        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+      </div>
+      <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if (! ($out)): ?>
+        <button type="button" class="fb-add" data-add="<?php echo e(json_encode($data)); ?>" data-scope="<?php echo e($scope); ?>" aria-label="Ajouter <?php echo e($p->name); ?> au panier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><path d="M13 9v4M11 11h4"/></svg></button>
+      <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
     </div>
   </div>
-</a>
+</article>
 <?php /**PATH /Users/messoukoita/Downloads/fabara-complet/resources/views/site/_card.blade.php ENDPATH**/ ?>

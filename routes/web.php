@@ -50,6 +50,9 @@ Route::get('/rapport.pdf', [ExportController::class, 'pdf'])->middleware(['auth'
 // ---- Fiche d'un article ----
 Route::get('/article/{product}', [SiteController::class, 'product'])->name('product');
 
+// ---- Articles en promotion ----
+Route::get('/promotions', [SiteController::class, 'promotions'])->name('promotions');
+
 // ---- Recherche dans tout le site ----
 Route::get('/recherche', [SiteController::class, 'search'])->name('search');
 
