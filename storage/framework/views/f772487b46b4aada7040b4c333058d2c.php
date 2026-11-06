@@ -46,6 +46,7 @@ h1,h2,h3{line-height:1.15;text-wrap:balance;margin:0}
 .fb-logo{display:flex;flex-direction:column;line-height:1}
 .fb-logo b{font-weight:800;font-size:29px;letter-spacing:-1px;color:var(--fg)}
 .fb-logo b i{font-style:normal;color:var(--orange)}
+.fb-logo img{display:block;height:64px;width:auto}
 .fb-logo small{font-size:11px;color:var(--muted);margin-top:4px}
 .fb-search{flex:1;display:flex;min-width:0;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
 .fb-search input{flex:1;min-width:0;border:0;background:transparent;padding:11px 18px;font:inherit;color:var(--fg);outline:none}
@@ -193,7 +194,7 @@ h1,h2,h3{line-height:1.15;text-wrap:balance;margin:0}
 <header class="fb-header">
   <div class="fb-wrap">
     <div class="fb-head">
-      <a class="fb-logo" href="<?php echo e(route('home')); ?>" aria-label="<?php echo e($company); ?>, accueil"><b>FABAR<i>A</i></b><small>Boutique · Mode, beauté &amp; impression</small></a>
+      <a class="fb-logo" href="<?php echo e(route('home')); ?>" aria-label="<?php echo e($company); ?>, accueil"><img src="<?php echo e(asset('images/logo.jpg')); ?>" alt="Fabara Impress &amp; Boutique" width="220" height="110"></a>
       <form class="fb-search" action="<?php echo e(route('search')); ?>" method="GET" role="search">
         <input type="search" name="q" value="<?php echo e(request()->routeIs('search') ? request('q') : ''); ?>" placeholder="Rechercher une robe, un savon, une casquette…" aria-label="Rechercher un article">
         <button type="submit" aria-label="Rechercher"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
@@ -254,7 +255,7 @@ h1,h2,h3{line-height:1.15;text-wrap:balance;margin:0}
 <footer class="fb-foot"><div class="fb-wrap">
   <div class="cols">
     <div>
-      <a class="fb-logo" href="<?php echo e(route('home')); ?>"><b>FABAR<i>A</i></b><small>Boutique · Mode, beauté &amp; impression</small></a>
+      <a class="fb-logo" href="<?php echo e(route('home')); ?>"><img src="<?php echo e(asset('images/logo.jpg')); ?>" alt="Fabara Impress &amp; Boutique" width="220" height="110" style="height:84px"></a>
       <p>Robes de soirée, robes blanches, ensembles, tenues homme, savons et soins de Thaïlande, et impression personnalisée avec Impress.</p>
     </div>
     <div><h4>Boutique</h4><ul><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $navCats->where('menu', 'boutique'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><li><a href="<?php echo e(route('category', ['boutique', $c->slug])); ?>"><?php echo e($c->name); ?></a></li><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?></ul></div>
