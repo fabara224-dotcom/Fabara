@@ -9,6 +9,21 @@ rm -rf storage/app/public && ln -s /data/storage-public storage/app/public
 mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
 chown -R www-data:www-data /data storage bootstrap/cache
 
+# Clé de chiffrement : si APP_KEY n'est pas définie dans Railway, on en crée une
+# une seule fois et on la garde dans /data (sinon les sessions sautent à chaque mise à jour).
+if [ -z "${APP_KEY}" ]; then
+  if [ ! -s /data/app_key ]; then
+    echo "base64:$(head -c 32 /dev/urandom | base64)" > /data/app_key
+    chmod 600 /data/app_key
+  fi
+  export APP_KEY="$(cat /data/app_key)"
+fi
+export APP_NAME=${APP_NAME:-Fabara}
+export APP_LOCALE=${APP_LOCALE:-fr}
+export APP_FALLBACK_LOCALE=${APP_FALLBACK_LOCALE:-fr}
+if [ -z "${APP_URL}" ] && [ -n "${RAILWAY_PUBLIC_DOMAIN}" ]; then export APP_URL="https://${RAILWAY_PUBLIC_DOMAIN}"; fi
+export LOG_CHANNEL=${LOG_CHANNEL:-stderr}
+
 export DB_CONNECTION=sqlite
 export DB_DATABASE=/data/database.sqlite
 export APP_ENV=${APP_ENV:-production}
