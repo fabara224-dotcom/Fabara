@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 @php($company = \App\Support\Setting::get('company_name') ?: 'Fabara')
-<title>@yield('title', $company . ' Boutique — Mode, beauté & impression')</title>
+<title>@yield('title', 'Fabara-boutique.com — Mode, beauté & impression')</title>
 <meta name="description" content="@yield('description', 'Fabara Boutique à Conakry : robes de soirée, tenues homme, savons et soins de Thaïlande, et impression personnalisée avec Impress. Commande sur WhatsApp.')">
 <meta name="theme-color" content="#ea580c">
 <link rel="icon" href="{{ asset('images/logo.jpg') }}">
@@ -44,7 +44,8 @@ h1,h2,h3{line-height:1.15;text-wrap:balance;margin:0}
 .fb-header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line)}
 .fb-head{display:flex;align-items:center;gap:20px;padding-block:14px}
 .fb-logo{display:flex;flex-direction:column;line-height:1}
-.fb-logo b{font-weight:800;font-size:29px;letter-spacing:-1px;color:var(--fg)}
+.fb-logo b{font-weight:800;font-size:26px;letter-spacing:-.8px;color:var(--fg);white-space:nowrap}
+@media(max-width:640px){.fb-logo b{font-size:20px}}
 .fb-logo b i{font-style:normal;color:var(--orange)}
 .fb-logo img{display:block;height:64px;width:auto}
 .fb-logo small{font-size:11px;color:var(--muted);margin-top:4px}
@@ -173,7 +174,7 @@ h1,h2,h3{line-height:1.15;text-wrap:balance;margin:0}
   .fb-grid,.fb-grid.g4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .fb-devis .fb-wrap{grid-template-columns:1fr}.fb-foot .cols{grid-template-columns:1fr 1fr}
 }
-@media (max-width:480px){.fb-form .row{grid-template-columns:1fr}.fb-foot .cols{grid-template-columns:1fr}.fb-logo b{font-size:25px}}
+@media (max-width:480px){.fb-form .row{grid-template-columns:1fr}.fb-foot .cols{grid-template-columns:1fr}.fb-logo b{font-size:20px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @stack('styles')
 </style>
@@ -194,7 +195,7 @@ h1,h2,h3{line-height:1.15;text-wrap:balance;margin:0}
 <header class="fb-header">
   <div class="fb-wrap">
     <div class="fb-head">
-      <a class="fb-logo" href="{{ route('home') }}" aria-label="{{ $company }}, accueil"><img src="{{ asset('images/logo.jpg') }}" alt="Fabara Impress &amp; Boutique" width="220" height="110"></a>
+      <a class="fb-logo" href="{{ route('home') }}" aria-label="Fabara-boutique.com, accueil"><b>Fabara<i>-boutique</i>.com</b><small>Boutique · Mode, beauté &amp; impression</small></a>
       <form class="fb-search" action="{{ route('search') }}" method="GET" role="search">
         <input type="search" name="q" value="{{ request()->routeIs('search') ? request('q') : '' }}" placeholder="Rechercher une robe, un savon, une casquette…" aria-label="Rechercher un article">
         <button type="submit" aria-label="Rechercher"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
@@ -255,7 +256,7 @@ h1,h2,h3{line-height:1.15;text-wrap:balance;margin:0}
 <footer class="fb-foot"><div class="fb-wrap">
   <div class="cols">
     <div>
-      <a class="fb-logo" href="{{ route('home') }}"><img src="{{ asset('images/logo.jpg') }}" alt="Fabara Impress &amp; Boutique" width="220" height="110" style="height:84px"></a>
+      <a class="fb-logo" href="{{ route('home') }}"><b>Fabara<i>-boutique</i>.com</b><small>Boutique · Mode, beauté &amp; impression</small></a>
       <p>Robes de soirée, robes blanches, ensembles, tenues homme, savons et soins de Thaïlande, et impression personnalisée avec Impress.</p>
     </div>
     <div><h4>Boutique</h4><ul>@foreach ($navCats->where('menu', 'boutique') as $c)<li><a href="{{ route('category', ['boutique', $c->slug]) }}">{{ $c->name }}</a></li>@endforeach</ul></div>
@@ -265,13 +266,14 @@ h1,h2,h3{line-height:1.15;text-wrap:balance;margin:0}
       @if ($address)<p>{{ $address }}</p>@endif
       @if ($phone)<div class="fb-copy"><code id="fbPhone">{{ $phone }}</code><button type="button" id="copyPhone">Copier</button></div>@endif
       <ul style="margin-top:10px">
+        <li><a href="https://www.fabara-boutique.com">www.fabara-boutique.com</a></li>
         <li><a href="{{ route('track') }}">Suivre ma commande</a></li>
         @guest<li><a href="{{ route('register') }}">Créer un compte</a></li>@endguest
       </ul>
     </div>
   </div>
   <div class="fb-legal">
-    <span>© {{ date('Y') }} {{ $company }} Boutique. Tous droits réservés.</span>
+    <span>© {{ date('Y') }} Fabara-boutique.com. Tous droits réservés.</span>
     <span><a href="{{ route('privacy') }}">Confidentialité</a><a href="{{ route('terms') }}">Conditions</a><a href="{{ route('deletion') }}">Suppression de compte</a></span>
   </div>
 </div></footer>
